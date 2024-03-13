@@ -162,15 +162,20 @@ def main(file_path):
         df.to_csv(file_path, index=False)
 
     logger.info("Starting scraper...")
+    change_happened = False
     for i in range(0, 2):
         payload_data["draw"] = i + 1
         payload_data["start"] = i * payload_data["length"]
         logger.info(f"Starting index: {payload_data['start']}")
         result = scrape_fund_database(payload=payload_data, data_df=df)
         result_df = pd.DataFrame(result)
-        df = pd.concat([df, result_df], axis=0)
+        if len(result_df) > 0:
+            change_happened = True
+            df = pd.concat([df, result_df], axis=0)
 
-    df.to_csv(file_path, index=False)
+    if change_happened:
+        logger.info("Saving fundDatabase.csv file...")
+        df.to_csv(file_path, index=False)
 
 
 if __name__ == "__main__":
