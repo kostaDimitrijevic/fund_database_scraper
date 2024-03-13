@@ -1,5 +1,12 @@
 # fund_database_scraper
 
-Add your enviroment variables 
+Add your enviroment variables
 
-Execute cd app and then python app.py
+Execute:
+
+pip install -r requirements.txt
+
+cd app
+
+python app.py
+
